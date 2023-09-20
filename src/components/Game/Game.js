@@ -5,6 +5,8 @@ import { WORDS } from "../../data";
 import GuessForm from "../GuessForm/GuessForm";
 import GuessResults from "../GuessResults/GuessResults";
 import Banner from "../Banner/Banner";
+import WinBanner from "../WinBanner/WinBanner";
+import LostBanner from "../LostBanner/LostBanner";
 
 // Pick a random word on every pageload.
 
@@ -13,40 +15,31 @@ import Banner from "../Banner/Banner";
 function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS)); // [answer, setAnswer
   const [guesses, setGuesses] = React.useState([]);
-  const [isWon, setIsWon] = React.useState(false);
-  const [gameOver, setGameOver] = React.useState(false);
-
+  const [gameStatus, setGameStatus] = React.useState("playing");
+  
   // Check if the game is over.
   function resetGame() {
     setGuesses([]);
-    setGameOver(false);
-    setIsWon(false);
+    setGameStatus("playing");
     setAnswer(sample(WORDS));
   }
   function handleSubmitGuess(tentativeGuess) {
     if (tentativeGuess === answer) {
-      setIsWon(true);
-      setGameOver(true);
+      setGameStatus("won");
     } else if (guesses.length >= 5) {
-      setGameOver(true);
-      setIsWon(false);
+      setGameStatus("lost");
     }
     setGuesses([...guesses, tentativeGuess]);
   }
+  console.log(answer);
   return (
     <>
       <GuessResults guesses={guesses} answer={answer} />
-      {gameOver ? (
-        <Banner
-          isWon={isWon}
-          guesses={guesses}
-          answer={answer}
-          resetGame={resetGame}
-        />
-      ) : (
-        <GuessForm handleSubmitGuess={handleSubmitGuess} />
-      )}
+      <GuessForm gameStatus={gameStatus} handleSubmitGuess={handleSubmitGuess} />
+      {gameStatus === "won" && <WinBanner guesses={guesses.length} resetGame={resetGame}/>}
+      {gameStatus === "lost" && <LostBanner answer={answer} guesses={guesses.length} resetGame={resetGame}/>}
     </>
+    
   );
 }
 

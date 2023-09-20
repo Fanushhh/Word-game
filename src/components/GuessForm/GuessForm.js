@@ -1,7 +1,7 @@
 import React from "react";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
-function GuessForm({ handleSubmitGuess }) {
+function GuessForm({ handleSubmitGuess, gameStatus }) {
   const [tentativeGuess, setTentativeGuess] = React.useState("");
 
   function handleSubmit(e) {
@@ -21,6 +21,7 @@ function GuessForm({ handleSubmitGuess }) {
         <label htmlFor="guess-input">Enter guess:</label>
         <input
           required
+          disabled={gameStatus !== "playing"}
           autoComplete="off"
           pattern="[A-Za-z]{5}"
           title="5 letters only"
