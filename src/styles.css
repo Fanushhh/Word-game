@@ -29,6 +29,18 @@ body {
     --game-spacing: 8px;
   }
 }
+.resetButton{
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  margin: 0 auto;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 
 button {
   margin: 0;
@@ -160,6 +172,14 @@ h1 {
   padding: 8px 16px;
   outline-offset: 4px;
 }
+.resultInfo{
+  display:flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items: center;
+  gap:2rem;
+  
+}
 
 .banner {
   position: fixed;
@@ -181,7 +201,7 @@ h1 {
   color: white;
 }
 .sad.banner {
-  background: var(--color-error);
+  background: rgb(177, 70, 70);
   color: white;
 }
 
